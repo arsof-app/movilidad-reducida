@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">MovilidadReducida</string>
+    <string name="ver_mapa">Ver Mapa</string>
+    <string name="a_adir_zona">Añadir Zona</string>
+    <string name="salir">Salir</string>
+    <string name="access_token">pk.eyJ1IjoiaWJhaSIsImEiOiJjamRlZWkydmUwOXFsMzJsNnJlcWVpcTZjIn0.nvcig_YXVAa72gVII5qQnw</string>
+</resources>
