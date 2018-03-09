@@ -16,7 +16,7 @@ import java.io.File;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ImageView img;
+    private static final int SHOW_CAMERAACTIVITY = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +39,8 @@ public class MainActivity extends AppCompatActivity {
         anadirZona.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(cameraIntent, 0);
+                Intent cameraIntent = new Intent(getApplicationContext(), CameraActivity.class);
+                startActivityForResult(cameraIntent, SHOW_CAMERAACTIVITY);
             }
         });
 
