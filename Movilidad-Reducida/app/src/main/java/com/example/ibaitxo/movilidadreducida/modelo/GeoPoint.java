@@ -2,13 +2,17 @@ package com.example.ibaitxo.movilidadreducida.modelo;
 
 import android.graphics.Bitmap;
 
+import com.parse.ParseClassName;
+import com.parse.ParseObject;
+
 /**
  * Created by leralite on 3/8/18.
  */
 
-public class GeoPoint {
-    private Double longitude;
-    private Double latitude;
+@ParseClassName("GeoPoint")
+public class GeoPoint extends ParseObject{
+    private double longitud;
+    private double latitud;
     private Bitmap image;
     private String name;
     private String description;
@@ -16,27 +20,28 @@ public class GeoPoint {
     //Constructors
     public GeoPoint(){}
 
-    public GeoPoint(Double longitude, Double latitude){
-        this.longitude = longitude;
-        this.latitude = latitude;
+    public GeoPoint(double longitud, double latitud){
+        this.longitud = longitud;
+        this.latitud = latitud;
     }
 
-    public GeoPoint(String name, Double longitude, Double latitude){
-        this(longitude, latitude);
+    public GeoPoint(String name, double longitud, double latitud){
+        this.longitud = longitud;
+        this.latitud = latitud;
         this.name = name;
     }
 
     //Methods
-    public Double getLongitude(){
-        return longitude;
+    public double getLongitude(){
+        return getDouble("longitud");
     }
 
-    public Double getLatitude(){
-        return latitude;
+    public double getLatitude(){
+        return getDouble("latitud");
     }
 
     public String getName(){
-        return name;
+        return  getString("nombre");
     }
 
     public Bitmap getImage(){
@@ -47,24 +52,24 @@ public class GeoPoint {
         return description;
     }
 
-    public void setLongitude(){
-        this.longitude = longitude;
+    public void setLongitude(double longitud){
+        put("longitud",longitud);
     }
 
-    public void setLatitude(){
-        this.latitude = latitude;
+    public void setLatitude(double latitud){
+        put("latitud",latitud);
     }
 
     public void setName(){
-        this.name = name;
+        put("nombre",name);
     }
 
     public void setImage(Bitmap image){
         this.image = image;
     }
 
-    public void setDescription(Double longitude){
-        this.longitude = longitude;
+    public void setDescription(String description){
+        put("descripcion",description);
     }
 
 }
