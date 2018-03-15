@@ -1,6 +1,7 @@
 package com.example.ibaitxo.movilidadreducida;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.hardware.Camera;
@@ -19,6 +20,7 @@ import android.provider.MediaStore;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import java.io.ByteArrayOutputStream;
 import java.util.Date;
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -30,63 +32,31 @@ import com.example.ibaitxo.movilidadreducida.modelo.CameraPreview;
  */
 
 public class CameraActivity extends AppCompatActivity{
+    private static final int CAMERA_REQUEST = 1888;
     private ImageView imageView;
-    private Button takePictureButton;
-    private Uri file;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
 
-        takePictureButton = (Button) findViewById(R.id.button_capture);
-        imageView = (ImageView) findViewById(R.id.camera_preview);
+        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(cameraIntent, CAMERA_REQUEST);
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            takePictureButton.setEnabled(false);
-            ActivityCompat.requestPermissions(this, new String[] { Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE }, 0);
-        }
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        if (requestCode == 0) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED
-                    && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-                takePictureButton.setEnabled(true);
-            }
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
+            Bitmap photo = (Bitmap) intent.getExtras().get("data");
+            Log.v("CameraAcitvity: ",photo.toString());
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            photo.compress(Bitmap.CompressFormat.PNG, 100, stream);
+
+            byte[] byteArray = stream.toByteArray();
+
+            Intent insertIntent = new Intent(getApplicationContext(), InsertActivity.class);
+            insertIntent.putExtra("image", byteArray);
+            startActivity(insertIntent);
         }
-    }
-
-    public void takePicture(View view) {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        file = Uri.fromFile(getOutputMediaFile());
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, file);
-
-        startActivityForResult(intent, 100);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 100) {
-            if (resultCode == RESULT_OK) {
-                imageView.setImageURI(file);
-            }
-        }
-    }
-
-    private static File getOutputMediaFile(){
-        File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_PICTURES), "CameraDemo");
-
-        if (!mediaStorageDir.exists()){
-            if (!mediaStorageDir.mkdirs()){
-                return null;
-            }
-        }
-
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        return new File(mediaStorageDir.getPath() + File.separator +
-                "IMG_"+ timeStamp + ".jpg");
     }
 }

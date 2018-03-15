@@ -39,6 +39,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".MapsActivity" />
+        <activity android:name=".InsertActivity" />
 
         <service android:name="com.mapbox.mapboxsdk.telemetry.TelemetryService" />
 
