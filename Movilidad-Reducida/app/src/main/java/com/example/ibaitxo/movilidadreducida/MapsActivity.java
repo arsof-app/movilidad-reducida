@@ -4,6 +4,8 @@ import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 import com.example.ibaitxo.movilidadreducida.modelo.GeoPoint;
 import com.mapbox.mapboxsdk.MapboxAccountManager;
@@ -31,29 +33,25 @@ public class MapsActivity extends AppCompatActivity {
         MapboxAccountManager.start(this, getString(R.string.access_token));
         setContentView(R.layout.activity_maps);
         tpa = (TravelPointsApplication) getApplicationContext();
-        getServerList();
+
         mapView = findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(new OnMapReadyCallback() {
             @Override
-            public void onMapReady(MapboxMap map) {
+            public void onMapReady(final MapboxMap map) {
                 mapboxMap = map;
-                mapboxMap.addImage(
-                        "my-marker-image",
-                        BitmapFactory.decodeResource(MapsActivity.this.getResources(),
-                                R.drawable.default_marker)
-                );
-                for(GeoPoint gp : tpa.pointList){
-                    double lon = gp.getLongitude();
-                    double lat = gp.getLatitude();
-                    mapboxMap.addMarker(new MarkerOptions()
-                            .position(new LatLng(gp.getLatitude(),gp.getLongitude()))
-                            .title(gp.getDescription())
-                    );
-                }
+                getServerList(mapboxMap);
+                Button updateMarkers = (Button)findViewById(R.id.updateMarkers);
+                updateMarkers.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        getServerList(mapboxMap);
+                    }
+                });
+
+
             }
         });
-
     }
 
     @Override
@@ -86,13 +84,24 @@ public class MapsActivity extends AppCompatActivity {
         mapView.onLowMemory();
     }
 
-    private void getServerList() {
+    private void getServerList(final MapboxMap mapboxMap) {
 
         ParseQuery<GeoPoint> query = ParseQuery.getQuery("GeoPoint");
         query.findInBackground(new FindCallback<GeoPoint>() {
             public void done(List<GeoPoint> objects, ParseException e) {
                 if (e == null) {
                     tpa.pointList = objects;
+                    mapboxMap.addImage(
+                            "my-marker-image",
+                            BitmapFactory.decodeResource(MapsActivity.this.getResources(),
+                                    R.drawable.default_marker)
+                    );
+                    for(GeoPoint gp : tpa.pointList){
+                        mapboxMap.addMarker(new MarkerOptions()
+                                .position(new LatLng(gp.getLatitude(),gp.getLongitude()))
+                                .title(gp.getName())
+                        );
+                    }
                     Log.v("query OK ", "getServerList()");
                 } else {
                     Log.v("error query, reason: " + e.getMessage(), "getServerList()");
