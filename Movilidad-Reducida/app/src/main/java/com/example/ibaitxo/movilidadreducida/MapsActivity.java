@@ -1,6 +1,14 @@
 package com.example.ibaitxo.movilidadreducida;
 
+import android.Manifest;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
+import android.location.Location;
+import android.location.LocationManager;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,7 +17,9 @@ import android.widget.Button;
 import android.widget.Toast;
 import com.example.ibaitxo.movilidadreducida.modelo.GeoPoint;
 import com.mapbox.mapboxsdk.MapboxAccountManager;
+import com.mapbox.mapboxsdk.annotations.Marker;
 import com.mapbox.mapboxsdk.annotations.MarkerOptions;
+import com.mapbox.mapboxsdk.camera.CameraUpdateFactory;
 import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
@@ -34,11 +44,13 @@ public class MapsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_maps);
         tpa = (TravelPointsApplication) getApplicationContext();
 
+
         mapView = findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(final MapboxMap map) {
+
                 mapboxMap = map;
                 getServerList(mapboxMap);
                 Button updateMarkers = (Button)findViewById(R.id.updateMarkers);
@@ -48,11 +60,21 @@ public class MapsActivity extends AppCompatActivity {
                         getServerList(mapboxMap);
                     }
                 });
+                mapboxMap.setOnMarkerClickListener(new MapboxMap.OnMarkerClickListener() {
+                    @Override
+                    public boolean onMarkerClick(@NonNull Marker marker) {
+                        Intent intent = new Intent(getApplicationContext(), VoteActivity.class);
+                        startActivity(intent);
+                        return true;
+                    }
+                });
 
 
             }
         });
     }
+
+
 
     @Override
     protected void onDestroy() {
