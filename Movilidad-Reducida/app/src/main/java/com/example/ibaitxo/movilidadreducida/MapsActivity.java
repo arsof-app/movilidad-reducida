@@ -8,11 +8,14 @@ import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationManager;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Toast;
 import com.example.ibaitxo.movilidadreducida.modelo.GeoPoint;
@@ -44,7 +47,6 @@ public class MapsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_maps);
         tpa = (TravelPointsApplication) getApplicationContext();
 
-
         mapView = findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(new OnMapReadyCallback() {
@@ -62,14 +64,20 @@ public class MapsActivity extends AppCompatActivity {
                 });
                 mapboxMap.setOnMarkerClickListener(new MapboxMap.OnMarkerClickListener() {
                     @Override
-                    public boolean onMarkerClick(@NonNull Marker marker) {
+                    public boolean onMarkerClick(Marker marker) {
+                        String nombre = marker.getTitle();
+                        double lat = marker.getPosition().getLatitude();
+                        double lon = marker.getPosition().getLatitude();
                         Intent intent = new Intent(getApplicationContext(), VoteActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putString("nombre",nombre);
+                        bundle.putDouble("latitud",lat);
+                        bundle.putDouble("longitud",lon);
+                        intent.putExtras(bundle);
                         startActivity(intent);
-                        return true;
+                        return false;
                     }
                 });
-
-
             }
         });
     }
