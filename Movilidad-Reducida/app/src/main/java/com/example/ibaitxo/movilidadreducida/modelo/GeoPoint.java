@@ -49,7 +49,11 @@ public class GeoPoint extends ParseObject{
     }
 
     public String getDescription(){
-        return description;
+        return getString("descripcion");
+    }
+
+    public String getIdObjeto() {
+        return getObjectId();
     }
 
     public void setLongitude(double longitud){
@@ -60,7 +64,7 @@ public class GeoPoint extends ParseObject{
         put("latitud",latitud);
     }
 
-    public void setName(){
+    public void setName(String name){
         put("nombre",name);
     }
 

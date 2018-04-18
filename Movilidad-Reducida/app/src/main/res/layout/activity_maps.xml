@@ -11,21 +11,24 @@
         android:id="@+id/mapView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         mapbox:center_latitude="42.8017"
         mapbox:center_longitude="-1.6262"
         mapbox:style_url="mapbox://styles/ibai/cjds1play2xf62sp92kz3gqwb"
         mapbox:tilt="20"
-        mapbox:zoom="12"
-        >
+        mapbox:zoom="12">
 
         <Button
             android:id="@+id/updateMarkers"
             style="@style/Widget.AppCompat.Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Actualizar Mapa"
             android:onClick="getServerList"
+            android:text="Actualizar Mapa"
             android:visibility="visible" />
+
     </com.mapbox.mapboxsdk.maps.MapView>
 
 </RelativeLayout>
