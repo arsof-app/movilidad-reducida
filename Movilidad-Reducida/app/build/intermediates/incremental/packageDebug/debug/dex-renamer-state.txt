@@ -1,4 +1,0 @@
-#Thu Apr 19 10:27:53 CEST 2018
-base.0=/home/leralite/Documents/AS/GitHub/Movilidad-Reducida/app/build/intermediates/transforms/dexMerger/debug/0
-path.0=classes.dex
-renamed.0=classes.dex
