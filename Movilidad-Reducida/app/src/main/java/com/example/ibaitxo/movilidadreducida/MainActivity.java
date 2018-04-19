@@ -1,14 +1,27 @@
 package com.example.ibaitxo.movilidadreducida;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.Toast;
+
+import com.example.ibaitxo.movilidadreducida.modelo.GeoPoint;
+import com.parse.ParseException;
+import com.parse.SaveCallback;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final int SHOW_CAMERAACTIVITY = 2;
+    ListView list;
+    ArrayAdapter<GeoPoint> todoItemsAdapter;
+    TravelPointsApplication tpa;
+    GeoPoint geoPoint;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +59,51 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == SHOW_CAMERAACTIVITY && resultCode == RESULT_OK)
+            {
+                Bundle bundle = data.getExtras();
 
-    public void salirApp (View view){
-        finish();
+                Double latitud = bundle.getDouble("latitud");
+                Double longitud = bundle.getDouble("longitud");
+                byte[] image = bundle.getByteArray("image");
+                String desc = bundle.getString("text");
+
+
+                newParseObject(desc,latitud,longitud, image);
+
+            }
+        }
     }
+
+    private void newParseObject(String desc, Double latitud, Double longitud, byte[] image) {
+        geoPoint = new GeoPoint();
+        geoPoint.setDescription(desc);
+        geoPoint.setLongitude(longitud);
+        geoPoint.setLatitude(latitud);
+        geoPoint.setImage(image);
+
+
+
+        geoPoint.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e == null) {
+                    //tpa.pointList.add(geoPoint);
+                    //todoItemsAdapter.notifyDataSetChanged();
+                    Log.v("object updated:", "updateParseObject()");
+                } else {
+                    Log.v("save failed, reason: "+ e.getMessage(), "newParseObject()");
+                    Toast.makeText(
+                            getBaseContext(),
+                            "newParseObject(): Object save failed  to server, reason: "+ e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+        });
+    }
+
+
+    public void salirApp (View view){ finishAffinity(); }
 }

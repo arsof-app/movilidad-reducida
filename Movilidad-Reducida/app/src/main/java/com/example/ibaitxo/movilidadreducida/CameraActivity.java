@@ -33,6 +33,7 @@ import com.example.ibaitxo.movilidadreducida.modelo.CameraPreview;
 
 public class CameraActivity extends AppCompatActivity{
     private static final int CAMERA_REQUEST = 1888;
+    private static final int SHOW_INSERTACTIVITY = 3;
     private ImageView imageView;
 
     @Override
@@ -56,7 +57,15 @@ public class CameraActivity extends AppCompatActivity{
 
             Intent insertIntent = new Intent(getApplicationContext(), InsertActivity.class);
             insertIntent.putExtra("image", byteArray);
-            startActivity(insertIntent);
+            startActivityForResult(insertIntent, SHOW_INSERTACTIVITY);
+        }
+        if (requestCode == SHOW_INSERTACTIVITY && resultCode == Activity.RESULT_OK){
+            setResult(RESULT_OK, intent);
+            finish();
+        }
+        if (requestCode == SHOW_INSERTACTIVITY && resultCode == Activity.RESULT_CANCELED){
+            setResult(RESULT_CANCELED);
+            finish();
         }
     }
 }

@@ -11,25 +11,10 @@ import com.parse.ParseObject;
 
 @ParseClassName("GeoPoint")
 public class GeoPoint extends ParseObject{
-    private double longitud;
-    private double latitud;
-    private Bitmap image;
-    private String name;
-    private String description;
 
     //Constructors
     public GeoPoint(){}
 
-    public GeoPoint(double longitud, double latitud){
-        this.longitud = longitud;
-        this.latitud = latitud;
-    }
-
-    public GeoPoint(String name, double longitud, double latitud){
-        this.longitud = longitud;
-        this.latitud = latitud;
-        this.name = name;
-    }
 
     //Methods
     public double getLongitude(){
@@ -44,9 +29,7 @@ public class GeoPoint extends ParseObject{
         return  getString("nombre");
     }
 
-    public Bitmap getImage(){
-        return image;
-    }
+    public byte[] getImage(){ return getBytes("image"); }
 
     public String getDescription(){
         return getString("descripcion");
@@ -68,9 +51,7 @@ public class GeoPoint extends ParseObject{
         put("nombre",name);
     }
 
-    public void setImage(Bitmap image){
-        this.image = image;
-    }
+    public void setImage(byte[] image){ put("image", image); }
 
     public void setDescription(String description){
         put("descripcion",description);
