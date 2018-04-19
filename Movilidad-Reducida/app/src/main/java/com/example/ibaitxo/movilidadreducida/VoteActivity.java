@@ -1,22 +1,17 @@
 package com.example.ibaitxo.movilidadreducida;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.example.ibaitxo.movilidadreducida.modelo.GeoPoint;
-import com.parse.GetCallback;
-import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
-
-import java.util.List;
 
 public class VoteActivity extends AppCompatActivity {
 
@@ -32,6 +27,7 @@ public class VoteActivity extends AppCompatActivity {
         gP = getObject(bundle);
         String descripcion = gP.getDescription();
         String nombre = gP.getName();
+        byte[] byteImage = gP.getImage();
 
         TextView textViewDesc =findViewById(R.id.textViewDescripcion);
         textViewDesc.setTextSize(15);
@@ -40,6 +36,10 @@ public class VoteActivity extends AppCompatActivity {
         TextView textViewNombre =findViewById(R.id.textViewNombre);
         textViewNombre.setTextSize(12);
         textViewNombre.setText(nombre);
+
+        Bitmap image = BitmapFactory.decodeByteArray(byteImage,0,byteImage.length);
+        ImageView imViewImage = findViewById(R.id.imageView);
+        imViewImage.setImageBitmap(image);
 
         Button volver = (Button)findViewById(R.id.volver);
         volver.setOnClickListener(new View.OnClickListener() {
@@ -60,6 +60,7 @@ public class VoteActivity extends AppCompatActivity {
         try{
             GeoPoint object = query.getFirst();
             object.getDescription();
+            object.getImage();
             return object;
         }catch(ParseException e){
             Log.v("Error","Failed query");

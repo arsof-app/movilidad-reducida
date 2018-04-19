@@ -32,7 +32,6 @@
         android:id="@+id/imageView"
         android:layout_width="322dp"
         android:layout_height="196dp"
-        app:srcCompat="@drawable/logo"
         tools:layout_editor_absoluteX="31dp"
         tools:layout_editor_absoluteY="16dp" />
 
