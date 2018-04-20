@@ -49,9 +49,6 @@ public class MapsActivity extends AppCompatActivity {
         tpa = (TravelPointsApplication) getApplicationContext();
         gps = new GPS(getApplicationContext());
         pos = new LatLng(gps.getLocation().getLatitude(),gps.getLocation().getLongitude());
-        if(pos == null){
-            pos = new LatLng(42.8168700, -1.6432300);
-        }
         mapView = findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(new OnMapReadyCallback() {
@@ -59,13 +56,12 @@ public class MapsActivity extends AppCompatActivity {
             public void onMapReady(final MapboxMap map) {
 
                 mapboxMap = map;
-                mapboxMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pos, 14));
-                getServerList(mapboxMap);
+                getServerList(mapboxMap,pos);
                 Button updateMarkers = (Button)findViewById(R.id.updateMarkers);
                 updateMarkers.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        getServerList(mapboxMap);
+                        getServerList(mapboxMap, pos);
                     }
                 });
                 mapboxMap.setOnMarkerClickListener(new MapboxMap.OnMarkerClickListener() {
@@ -120,13 +116,14 @@ public class MapsActivity extends AppCompatActivity {
         mapView.onLowMemory();
     }
 
-    private void getServerList(final MapboxMap mapboxMap) {
+    private void getServerList(final MapboxMap mapboxMap,final LatLng position) {
 
         ParseQuery<GeoPoint> query = ParseQuery.getQuery("GeoPoint");
         query.findInBackground(new FindCallback<GeoPoint>() {
             public void done(List<GeoPoint> objects, ParseException e) {
                 if (e == null) {
                     tpa.pointList = objects;
+                    mapboxMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 15));
                     mapboxMap.addImage(
                             "my-marker-image",
                             BitmapFactory.decodeResource(MapsActivity.this.getResources(),

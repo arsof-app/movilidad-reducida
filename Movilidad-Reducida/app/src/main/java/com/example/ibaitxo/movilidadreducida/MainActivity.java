@@ -29,13 +29,13 @@ public class MainActivity extends AppCompatActivity {
     ArrayAdapter<GeoPoint> todoItemsAdapter;
     TravelPointsApplication tpa;
     GeoPoint geoPoint;
-
+    GPS gps;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         final Intent intentMaps = new Intent(getApplicationContext(), MapsActivity.class);
-
+        gps = new GPS(getApplicationContext());
         Button verMapa = findViewById(R.id.verMapa);
         Button anadirZona = findViewById(R.id.anadirZona);
         Button salir = findViewById(R.id.salir);
