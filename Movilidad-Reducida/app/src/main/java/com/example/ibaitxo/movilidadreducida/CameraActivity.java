@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.hardware.Camera;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -68,4 +69,5 @@ public class CameraActivity extends AppCompatActivity{
             finish();
         }
     }
+
 }

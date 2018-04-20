@@ -39,14 +39,19 @@ public class MapsActivity extends AppCompatActivity {
     private MapView mapView = null;
     private MapboxMap mapboxMap = null;
     TravelPointsApplication tpa;
-
+    GPS gps;
+    LatLng pos;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         MapboxAccountManager.start(this, getString(R.string.access_token));
         setContentView(R.layout.activity_maps);
         tpa = (TravelPointsApplication) getApplicationContext();
-
+        gps = new GPS(getApplicationContext());
+        pos = new LatLng(gps.getLocation().getLatitude(),gps.getLocation().getLongitude());
+        if(pos == null){
+            pos = new LatLng(42.8168700, -1.6432300);
+        }
         mapView = findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(new OnMapReadyCallback() {
@@ -54,6 +59,7 @@ public class MapsActivity extends AppCompatActivity {
             public void onMapReady(final MapboxMap map) {
 
                 mapboxMap = map;
+                mapboxMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pos, 14));
                 getServerList(mapboxMap);
                 Button updateMarkers = (Button)findViewById(R.id.updateMarkers);
                 updateMarkers.setOnClickListener(new View.OnClickListener() {

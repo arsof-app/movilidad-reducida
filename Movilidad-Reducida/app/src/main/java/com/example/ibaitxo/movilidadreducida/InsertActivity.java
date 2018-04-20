@@ -27,22 +27,25 @@ public class InsertActivity extends AppCompatActivity{
     private byte[] byteArray;
     private ImageView imageView;
     private EditText desc;
+    private EditText nombre;
     private Bitmap image;
+    GPS gps;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_insert);
-
+        gps = new GPS(getApplicationContext());
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
 
         byteArray = intent.getByteArrayExtra("image");
         image = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
-        imageView = (ImageView) findViewById(R.id.image_view);
+        imageView = findViewById(R.id.image_view);
         imageView.setImageBitmap(image);
 
         desc = findViewById(R.id.text);
+        nombre = findViewById(R.id.nombre);
         Button subir = findViewById(R.id.button_subir);
         Button cancelar = findViewById(R.id.button_cancelar);
 
@@ -57,10 +60,8 @@ public class InsertActivity extends AppCompatActivity{
         subir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
-                Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                double longitude = location.getLongitude();
-                double latitude = location.getLatitude();
+                double longitude =  gps.getLocation().getLongitude();
+                double latitude = gps.getLocation().getLatitude();
 
 
                 Bundle bundle = new Bundle();
@@ -68,7 +69,7 @@ public class InsertActivity extends AppCompatActivity{
                 bundle.putDouble("longitud", longitude);
                 bundle.putDouble("latitud", latitude);
                 bundle.putString("text", desc.getText().toString());
-
+                bundle.putString("nombre", nombre.getText().toString());
                 Intent intent =  new Intent();
                 intent.putExtras(bundle);
                 setResult(RESULT_OK, intent);
@@ -76,5 +77,11 @@ public class InsertActivity extends AppCompatActivity{
             }
         });
 
+    }
+
+    Location updateLocation(){
+
+        Location location = gps.getLocation();
+        return location;
     }
 }

@@ -30,7 +30,7 @@ public class GeoPoint extends ParseObject{
         return  getString("nombre");
     }
 
-    public ParseFile getImage(){ return getParseFile("image"); }
+    public byte[] getImage(){ return getBytes("image"); }
 
     public String getDescription(){
         return getString("descripcion");
@@ -52,7 +52,7 @@ public class GeoPoint extends ParseObject{
         put("nombre",name);
     }
 
-    public void setImage(ParseFile image){ put("image", image); }
+    public void setImage(byte[] image){ put("image", image); }
 
     public void setDescription(String description){
         put("descripcion",description);

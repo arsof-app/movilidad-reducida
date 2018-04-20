@@ -30,7 +30,7 @@ public class VoteActivity extends AppCompatActivity {
         gP = getObject(bundle);
         String descripcion = gP.getDescription();
         String nombre = gP.getName();
-        ParseFile file = gP.getImage();
+        byte[] byteArray = gP.getImage();
 
         TextView textViewDesc =findViewById(R.id.textViewDescripcion);
         textViewDesc.setTextSize(15);
@@ -40,17 +40,12 @@ public class VoteActivity extends AppCompatActivity {
         textViewNombre.setTextSize(12);
         textViewNombre.setText(nombre);
 
-        byte[] byteArray = new byte[0];
-        try {
-            byteArray = file.getData();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+
         Bitmap image = BitmapFactory.decodeByteArray(byteArray,0,byteArray.length);
         ImageView imViewImage = findViewById(R.id.imageView);
         imViewImage.setImageBitmap(image);
 
-        Button volver = (Button)findViewById(R.id.volver);
+        Button volver = findViewById(R.id.volver);
         volver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -70,6 +65,7 @@ public class VoteActivity extends AppCompatActivity {
             GeoPoint object = query.getFirst();
             object.getDescription();
             object.getImage();
+            object.getName();
             return object;
         }catch(ParseException e){
             Log.v("Error","Failed query");

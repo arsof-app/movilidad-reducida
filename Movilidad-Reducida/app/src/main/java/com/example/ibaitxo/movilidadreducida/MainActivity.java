@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Location;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,7 +17,10 @@ import android.widget.Toast;
 import com.example.ibaitxo.movilidadreducida.modelo.GeoPoint;
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseObject;
 import com.parse.SaveCallback;
+
+import java.io.File;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         final Intent intentMaps = new Intent(getApplicationContext(), MapsActivity.class);
 
         Button verMapa = findViewById(R.id.verMapa);
@@ -67,22 +70,22 @@ public class MainActivity extends AppCompatActivity {
             if (requestCode == SHOW_CAMERAACTIVITY && resultCode == RESULT_OK)
             {
                 Bundle bundle = data.getExtras();
-
                 Double latitud = bundle.getDouble("latitud");
                 Double longitud = bundle.getDouble("longitud");
                 byte[] byteArray = bundle.getByteArray("image");
-                ParseFile image = new ParseFile(byteArray);
+
+                String nombre = bundle.getString("nombre");
                 String desc = bundle.getString("text");
-
-
-                newParseObject(desc,latitud,longitud, image);
+                newParseObject(nombre,desc,latitud,longitud, byteArray);
 
             }
         }
     }
 
-    private void newParseObject(String desc, Double latitud, Double longitud, ParseFile image) {
+
+    private void newParseObject(String nombre,String desc, Double latitud, Double longitud, byte[] image) {
         geoPoint = new GeoPoint();
+        geoPoint.setName(nombre);
         geoPoint.setDescription(desc);
         geoPoint.setLongitude(longitud);
         geoPoint.setLatitude(latitud);
