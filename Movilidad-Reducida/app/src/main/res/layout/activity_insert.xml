@@ -21,13 +21,33 @@
         android:layout_height="0dp"
         android:layout_weight="0.6"
         >
-
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/activity_insert_bottom_text"
+            android:id="@+id/activity_insert_bottom_text_nombre"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.20"
+            android:layout_weight="0.10"
             android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/nombre"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:textCursorDrawable="@null"
+                android:inputType="text"
+                android:hint="Nombre..." />
+        </RelativeLayout>
+
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/activity_insert_bottom_text_descripcion"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.25"
+            android:orientation="vertical">
+
 
             <EditText
                 android:id="@+id/text"
@@ -38,7 +58,7 @@
                 android:layout_alignParentTop="true"
                 android:gravity="top"
                 android:hint="Descripcion..."
-                android:inputType="text"
+                android:inputType="text|textMultiLine|textCapSentences"
                 android:textCursorDrawable="@null" />
 
         </RelativeLayout>
@@ -48,7 +68,7 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.35"
+            android:layout_weight="0.25"
             >
 
             <Button
@@ -66,20 +86,8 @@
                 android:layout_alignLeft="@+id/button_subir"
                 android:layout_alignParentBottom="true"
                 android:layout_alignStart="@+id/button_subir"
-                android:layout_marginBottom="35dp"
+                android:layout_marginBottom="20dp"
                 android:text="@string/Cancelar" />
-
-            <EditText
-                android:id="@+id/nombre"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:text="nombre" />
-
 
         </RelativeLayout>
 

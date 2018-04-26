@@ -20,6 +20,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Date;
@@ -40,7 +41,7 @@ public class CameraActivity extends AppCompatActivity{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_camera);
+        //setContentView(R.layout.activity_camera);
 
         Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(cameraIntent, CAMERA_REQUEST);
@@ -48,6 +49,7 @@ public class CameraActivity extends AppCompatActivity{
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+
         if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
             Bitmap photo = (Bitmap) intent.getExtras().get("data");
             Log.v("CameraAcitvity: ",photo.toString());
@@ -59,6 +61,9 @@ public class CameraActivity extends AppCompatActivity{
             Intent insertIntent = new Intent(getApplicationContext(), InsertActivity.class);
             insertIntent.putExtra("image", byteArray);
             startActivityForResult(insertIntent, SHOW_INSERTACTIVITY);
+        }
+        if (requestCode == CAMERA_REQUEST && resultCode == 0){
+            finish();
         }
         if (requestCode == SHOW_INSERTACTIVITY && resultCode == Activity.RESULT_OK){
             setResult(RESULT_OK, intent);

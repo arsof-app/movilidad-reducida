@@ -84,4 +84,12 @@ public class InsertActivity extends AppCompatActivity{
         Location location = gps.getLocation();
         return location;
     }
+
+
+    @Override
+    public void onBackPressed(){
+
+        super.onBackPressed();
+        finish();
+    }
 }
