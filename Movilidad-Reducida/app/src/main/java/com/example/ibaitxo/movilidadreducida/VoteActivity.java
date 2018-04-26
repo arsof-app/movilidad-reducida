@@ -1,24 +1,37 @@
 package com.example.ibaitxo.movilidadreducida;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.example.ibaitxo.movilidadreducida.modelo.GeoPoint;
+import com.example.ibaitxo.movilidadreducida.modelo.Voto;
+import com.parse.GetCallback;
 import com.parse.ParseException;
-import com.parse.ParseFile;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.SaveCallback;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class VoteActivity extends AppCompatActivity {
 
     GeoPoint gP;
+    Voto vote;
+    String idObjeto;
+    List<String> macList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +41,7 @@ public class VoteActivity extends AppCompatActivity {
         Bundle bundle = intent.getExtras();
 
         gP = getObject(bundle);
+        idObjeto = gP.getIdObjeto();
         String descripcion = gP.getDescription();
         String nombre = gP.getName();
         byte[] byteArray = gP.getImage();
@@ -54,15 +68,39 @@ public class VoteActivity extends AppCompatActivity {
             }
         });
 
+        Button votar = findViewById(R.id.votar);
+        votar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Obtenemos la mac
+                WifiManager manager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+                WifiInfo info = manager.getConnectionInfo();
+                String address = info.getMacAddress();
+
+
+            }
+        });
 
     }
 
     private GeoPoint getObject(Bundle bundle){
         String name = bundle.getString("nombre");
-        ParseQuery<GeoPoint> query = ParseQuery.getQuery("GeoPoint");
-        query.whereEqualTo("nombre",name);
+        double lat = bundle.getDouble("latitud");
+        double lon = bundle.getDouble("longitud");
+        ParseQuery<GeoPoint> queryName = ParseQuery.getQuery("GeoPoint");
+        ParseQuery<GeoPoint> queryLat = ParseQuery.getQuery("GeoPoint");
+        ParseQuery<GeoPoint> queryLon = ParseQuery.getQuery("GeoPoint");
+        queryName.whereEqualTo("nombre",name);
+        queryLat.whereEqualTo("latitud",lat);
+        queryLon.whereEqualTo("longitud",lon);
+        List<ParseQuery<GeoPoint>> queries = new ArrayList<ParseQuery<GeoPoint>>();
+        queries.add(queryName);
+        queries.add(queryLat);
+        queries.add(queryLon);
+        ParseQuery<GeoPoint> mainQuery = ParseQuery.or(queries);
         try{
-            GeoPoint object = query.getFirst();
+            GeoPoint object = mainQuery.getFirst();
+            object.getIdObjeto();
             object.getDescription();
             object.getImage();
             object.getName();
@@ -72,5 +110,29 @@ public class VoteActivity extends AppCompatActivity {
             return null;
         }
     }
+
+
+    private void newParseVoteObject(int voto, List mac, String idZona) {
+        ParseObject votoObj = new ParseObject("Voto");
+        votoObj.put("idZona",idZona);
+        votoObj.put("macList",mac);
+        votoObj.put("votos",voto);
+
+        votoObj.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e == null) {
+                    Log.v("object updated:", "updateParseObject()");
+                } else {
+                    Log.v("save failed, reason: "+ e.getMessage(), "newParseObject()");
+                    Toast.makeText(
+                            getBaseContext(),
+                            "newParseObject(): Object save failed  to server, reason: "+ e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+        });
+    }
+
 
 }
