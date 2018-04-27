@@ -39,7 +39,7 @@ public class GPS {
             return;
         }
 
-        _locationManager.requestLocationUpdates(_provider, 1000, 0, new LocationListener() {
+        _locationManager.requestLocationUpdates(_provider, 1000, 1, new LocationListener() {
             public void onLocationChanged(Location location) {
                 _location = location;
             }

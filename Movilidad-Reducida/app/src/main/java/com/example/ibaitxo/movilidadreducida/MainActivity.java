@@ -119,12 +119,10 @@ public class MainActivity extends AppCompatActivity {
                 if (e == null) {
                     //tpa.pointList.add(geoPoint);
                     //todoItemsAdapter.notifyDataSetChanged();
-                    Log.v("object updated:", "updateParseObject()");
+                    Toast.makeText(getApplicationContext(),"Insercion realizada correctamente",Toast.LENGTH_LONG).show();
                 } else {
                     Log.v("save failed, reason: "+ e.getMessage(), "newParseObject()");
-                    Toast.makeText(
-                            getBaseContext(),
-                            "newParseObject(): Object save failed  to server, reason: "+ e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"Insercion fallida",Toast.LENGTH_LONG).show();
                 }
             }
 
