@@ -39,9 +39,9 @@ public class VoteActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-
         gP = getObject(bundle);
         idObjeto = gP.getIdObjeto();
+
         String descripcion = gP.getDescription();
         String nombre = gP.getName();
         byte[] byteArray = gP.getImage();
@@ -77,7 +77,18 @@ public class VoteActivity extends AppCompatActivity {
                 WifiInfo info = manager.getConnectionInfo();
                 String address = info.getMacAddress();
 
-
+                //Buscamos el objeto Voto por IdZona obtenida de idObjeto de GeoPoint
+                vote = getVote(idObjeto);
+                List<String> macList = vote.getListaMac();
+                int votos = vote.getVotos();
+                if(!macList.contains(address)){
+                    macList.add(address);
+                    updateVotos(macList,++votos,idObjeto);
+                    Toast.makeText(getApplicationContext(),"Votacion realizada correctamente",Toast.LENGTH_LONG).show();
+                }
+                else{
+                    Toast.makeText(getApplicationContext(),"Ya se ha votado anteriormente",Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -111,27 +122,32 @@ public class VoteActivity extends AppCompatActivity {
         }
     }
 
+    private Voto getVote(String idObjeto){
+        ParseQuery<Voto> query = ParseQuery.getQuery("Voto");
+        query.whereEqualTo("idZona",idObjeto);
+        try{
+            Voto object = query.getFirst();
+            object.getListaMac();
+            object.getVotos();
+            object.getIdObjeto();
+            return object;
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
-    private void newParseVoteObject(int voto, List mac, String idZona) {
-        ParseObject votoObj = new ParseObject("Voto");
-        votoObj.put("idZona",idZona);
-        votoObj.put("macList",mac);
-        votoObj.put("votos",voto);
-
-        votoObj.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e == null) {
-                    Log.v("object updated:", "updateParseObject()");
-                } else {
-                    Log.v("save failed, reason: "+ e.getMessage(), "newParseObject()");
-                    Toast.makeText(
-                            getBaseContext(),
-                            "newParseObject(): Object save failed  to server, reason: "+ e.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            }
-
-        });
+    private void updateVotos(List<String> macList, int votos, String idObjeto){
+        ParseQuery<Voto> query = ParseQuery.getQuery("Voto");
+        query.whereEqualTo("idZona",idObjeto);
+        try{
+            Voto object = query.getFirst();
+            object.setListMac(macList);
+            object.setVotos(votos);
+            object.saveInBackground();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
 

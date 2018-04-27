@@ -2,8 +2,6 @@ package com.example.ibaitxo.movilidadreducida.modelo;
 
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
-
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,7 +31,7 @@ public class Voto extends ParseObject {
     }
 
     public void setVotos(int votos){
-        put("votos",votos++);
+        put("votos",votos);
     }
 
     public void setListMac(List macList){
