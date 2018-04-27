@@ -132,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void newParseVoteObject(int voto, List mac, String idZona) {
-        ParseObject votoObj = new ParseObject("Voto");
+        Voto votoObj = new Voto();
         votoObj.put("idZona",idZona);
         votoObj.put("macList",mac);
         votoObj.put("votos",voto);
