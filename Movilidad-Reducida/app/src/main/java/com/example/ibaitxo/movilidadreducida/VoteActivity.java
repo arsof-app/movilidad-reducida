@@ -63,8 +63,7 @@ public class VoteActivity extends AppCompatActivity {
         volver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent =  new Intent(getApplicationContext(), MapsActivity.class);
-                startActivity(intent);
+                finish();
             }
         });
 
@@ -151,4 +150,10 @@ public class VoteActivity extends AppCompatActivity {
     }
 
 
+
+    @Override
+    public void onBackPressed(){
+        super.onBackPressed();
+        finish();
+    }
 }

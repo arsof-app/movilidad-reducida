@@ -30,6 +30,7 @@ public class MapsActivity extends AppCompatActivity {
     TravelPointsApplication tpa;
     GPS gps;
     LatLng pos;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +69,9 @@ public class MapsActivity extends AppCompatActivity {
                         startActivity(intent);
                         return false;
                     }
+
                 });
+
             }
         });
     }
