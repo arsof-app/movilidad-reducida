@@ -23,7 +23,9 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.SaveCallback;
 
+import java.net.NetworkInterface;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class VoteActivity extends AppCompatActivity {
@@ -72,17 +74,16 @@ public class VoteActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //Obtenemos la mac
-                WifiManager manager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-                WifiInfo info = manager.getConnectionInfo();
-                String address = info.getMacAddress();
+                String address = getMacAddr();
 
                 //Buscamos el objeto Voto por IdZona obtenida de idObjeto de GeoPoint
                 vote = getVote(idObjeto);
                 List<String> macList = vote.getListaMac();
                 int votos = vote.getVotos();
+                String idZona = vote.getIdZona();
                 if(!macList.contains(address)){
                     macList.add(address);
-                    updateVotos(macList,++votos,idObjeto);
+                    updateVotos(macList,++votos,idZona);
                     Toast.makeText(getApplicationContext(),"Votacion realizada correctamente",Toast.LENGTH_LONG).show();
                 }
                 else{
@@ -136,9 +137,9 @@ public class VoteActivity extends AppCompatActivity {
         }
     }
 
-    private void updateVotos(List<String> macList, int votos, String idObjeto){
+    private void updateVotos(List<String> macList, int votos, String idZona){
         ParseQuery<Voto> query = ParseQuery.getQuery("Voto");
-        query.whereEqualTo("idZona",idObjeto);
+        query.whereEqualTo("idZona",idZona);
         try{
             Voto object = query.getFirst();
             object.setListMac(macList);
@@ -149,7 +150,31 @@ public class VoteActivity extends AppCompatActivity {
         }
     }
 
+    public static String getMacAddr() {
+        try {
+            List<NetworkInterface> all = Collections.list(NetworkInterface.getNetworkInterfaces());
+            for (NetworkInterface nif : all) {
+                if (!nif.getName().equalsIgnoreCase("wlan0")) continue;
 
+                byte[] macBytes = nif.getHardwareAddress();
+                if (macBytes == null) {
+                    return "";
+                }
+
+                StringBuilder res1 = new StringBuilder();
+                for (byte b : macBytes) {
+                    res1.append(String.format("%02X:",b));
+                }
+
+                if (res1.length() > 0) {
+                    res1.deleteCharAt(res1.length() - 1);
+                }
+                return res1.toString();
+            }
+        } catch (Exception ex) {
+        }
+        return "02:00:00:00:00:00";
+    }
 
     @Override
     public void onBackPressed(){
