@@ -26,7 +26,9 @@ import com.parse.ParseQuery;
 import com.parse.SaveCallback;
 
 import java.io.File;
+import java.net.NetworkInterface;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -90,9 +92,7 @@ public class MainActivity extends AppCompatActivity {
 
                 List<String> macList = new ArrayList<>();
                 //Obtenemos la mac
-                WifiManager manager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-                WifiInfo info = manager.getConnectionInfo();
-                String address = info.getMacAddress();
+                String address = getMacAddr();
                 macList.add(address);
 
                 //Hacemos la primera insercion de voto para el usuario que inserta en mapa
@@ -170,6 +170,32 @@ public class MainActivity extends AppCompatActivity {
             Log.v("Error","Failed query");
             return null;
         }
+    }
+
+    public static String getMacAddr() {
+        try {
+            List<NetworkInterface> all = Collections.list(NetworkInterface.getNetworkInterfaces());
+            for (NetworkInterface nif : all) {
+                if (!nif.getName().equalsIgnoreCase("wlan0")) continue;
+
+                byte[] macBytes = nif.getHardwareAddress();
+                if (macBytes == null) {
+                    return "";
+                }
+
+                StringBuilder res1 = new StringBuilder();
+                for (byte b : macBytes) {
+                    res1.append(String.format("%02X:",b));
+                }
+
+                if (res1.length() > 0) {
+                    res1.deleteCharAt(res1.length() - 1);
+                }
+                return res1.toString();
+            }
+        } catch (Exception ex) {
+        }
+        return "02:00:00:00:00:00";
     }
 
     public void salirApp (View view){ finishAffinity(); }
