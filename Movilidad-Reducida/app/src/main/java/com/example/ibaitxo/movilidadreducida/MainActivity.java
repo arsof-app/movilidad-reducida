@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
                 newParseObject(nombre,desc,latitud,longitud, byteArray);
 
                 //Necesitamos el id de la Zona
-                String idObjeto = getIdZona(nombre,latitud,longitud);
+                String idZona = getIdZona(nombre,latitud,longitud);
 
                 List<String> macList = new ArrayList<>();
                 //Obtenemos la mac
@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
                 macList.add(address);
 
                 //Hacemos la primera insercion de voto para el usuario que inserta en mapa
-                newParseVoteObject(1,macList,idObjeto);
+                newParseVoteObject(1,macList,idZona);
 
             }
         }
