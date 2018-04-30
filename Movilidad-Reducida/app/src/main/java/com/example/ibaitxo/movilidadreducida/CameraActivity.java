@@ -50,7 +50,7 @@ public class CameraActivity extends AppCompatActivity{
 
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
 
-        if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
+        if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK && intent != null) {
             Bitmap photo = (Bitmap) intent.getExtras().get("data");
             Log.v("CameraAcitvity: ",photo.toString());
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -63,6 +63,7 @@ public class CameraActivity extends AppCompatActivity{
             startActivityForResult(insertIntent, SHOW_INSERTACTIVITY);
         }
         if (requestCode == CAMERA_REQUEST && resultCode == 0){
+            setResult(RESULT_CANCELED);//Puede que haya que quitarlo
             finish();
         }
         if (requestCode == SHOW_INSERTACTIVITY && resultCode == Activity.RESULT_OK){

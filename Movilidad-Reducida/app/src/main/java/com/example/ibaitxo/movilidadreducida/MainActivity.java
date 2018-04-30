@@ -89,14 +89,21 @@ public class MainActivity extends AppCompatActivity {
 
                 //Necesitamos el id de la Zona
                 String idZona = getIdZona(nombre,latitud,longitud);
-
+                Log.d("Llego aqui","Paso id zona");
                 List<String> macList = new ArrayList<>();
+                Log.d("Llego aqui","Paso maclist");
                 //Obtenemos la mac
                 String address = getMacAddr();
+                Log.d("Llego aqui","Paso getaddres");
                 macList.add(address);
-
+                Log.d("Llego aqui","Paso mac add");
                 //Hacemos la primera insercion de voto para el usuario que inserta en mapa
                 newParseVoteObject(1,macList,idZona);
+                Log.d("LLego 2","Paso de newparsevote");
+
+
+            }else if(requestCode == SHOW_CAMERAACTIVITY && resultCode == RESULT_CANCELED){
+                Toast.makeText(getApplicationContext(),"Error obteniendo imagen, intentelo de nuevo",Toast.LENGTH_LONG).show();
 
             }
         }
@@ -130,10 +137,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void newParseVoteObject(int voto, List mac, String idZona) {
+        Log.d("LLego 2","entro a newparsevote");
         Voto votoObj = new Voto();
-        votoObj.put("idZona",idZona);
-        votoObj.put("macList",mac);
-        votoObj.put("votos",voto);
+        Log.d("LLego 2","creo nuevo objeto voto");
+        Log.d("idZona",idZona);
+        votoObj.setIdZona(idZona);
+        Log.d("LLego 2","inserto zona a newparsevote");
+        votoObj.setListMac(mac);
+        Log.d("LLego 2","inserto mac a newparsevote");
+        votoObj.setVotos(voto);
+        Log.d("LLego 2","inserto voto a newparsevote");
 
         votoObj.saveInBackground(new SaveCallback() {
             @Override

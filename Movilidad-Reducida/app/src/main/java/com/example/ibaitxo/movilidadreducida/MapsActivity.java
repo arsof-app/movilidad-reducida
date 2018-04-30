@@ -38,7 +38,7 @@ public class MapsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_maps);
         tpa = (TravelPointsApplication) getApplicationContext();
         gps = new GPS(getApplicationContext());
-        pos = new LatLng(gps.getLocation().getLatitude(),gps.getLocation().getLongitude());
+        pos = new LatLng(gps.getLatitud(),gps.getLongitud());
         mapView = findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(new OnMapReadyCallback() {
@@ -115,7 +115,7 @@ public class MapsActivity extends AppCompatActivity {
             public void done(List<GeoPoint> objects, ParseException e) {
                 if (e == null) {
                     tpa.pointList = objects;
-                    mapboxMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 15));
+                    mapboxMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 17));
                     mapboxMap.addImage(
                             "my-marker-image",
                             BitmapFactory.decodeResource(MapsActivity.this.getResources(),

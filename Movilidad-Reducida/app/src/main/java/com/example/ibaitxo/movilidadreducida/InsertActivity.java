@@ -60,8 +60,8 @@ public class InsertActivity extends AppCompatActivity{
         subir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                double longitude =  updateLocation().getLongitude();
-                double latitude = updateLocation().getLatitude();
+                double longitude =  gps.getLongitud();
+                double latitude = gps.getLatitud();
 
 
                 Bundle bundle = new Bundle();
@@ -78,13 +78,6 @@ public class InsertActivity extends AppCompatActivity{
         });
 
     }
-
-    Location updateLocation(){
-
-        Location location = gps.getLocation();
-        return location;
-    }
-
 
     @Override
     public void onBackPressed(){
