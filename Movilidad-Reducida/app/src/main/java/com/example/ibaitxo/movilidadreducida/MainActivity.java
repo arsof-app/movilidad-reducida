@@ -8,6 +8,8 @@ import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -67,7 +69,8 @@ public class MainActivity extends AppCompatActivity {
         salir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                salirApp(view);
+                finishAffinity();
+                android.os.Process.killProcess(android.os.Process.myPid());
             }
         });
 
@@ -89,17 +92,12 @@ public class MainActivity extends AppCompatActivity {
 
                 //Necesitamos el id de la Zona
                 String idZona = getIdZona(nombre,latitud,longitud);
-                Log.d("Llego aqui","Paso id zona");
                 List<String> macList = new ArrayList<>();
-                Log.d("Llego aqui","Paso maclist");
                 //Obtenemos la mac
                 String address = getMacAddr();
-                Log.d("Llego aqui","Paso getaddres");
                 macList.add(address);
-                Log.d("Llego aqui","Paso mac add");
                 //Hacemos la primera insercion de voto para el usuario que inserta en mapa
                 newParseVoteObject(1,macList,idZona);
-                Log.d("LLego 2","Paso de newparsevote");
 
 
             }else if(requestCode == SHOW_CAMERAACTIVITY && resultCode == RESULT_CANCELED){
@@ -118,35 +116,21 @@ public class MainActivity extends AppCompatActivity {
         geoPoint.setLatitude(latitud);
         geoPoint.setImage(image);
 
+        try {
+            geoPoint.save();
+            Toast.makeText(getApplicationContext(),"Insercion realizada correctamente",Toast.LENGTH_LONG).show();
 
-
-        geoPoint.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e == null) {
-                    //tpa.pointList.add(geoPoint);
-                    //todoItemsAdapter.notifyDataSetChanged();
-                    Toast.makeText(getApplicationContext(),"Insercion realizada correctamente",Toast.LENGTH_LONG).show();
-                } else {
-                    Log.v("save failed, reason: "+ e.getMessage(), "newParseObject()");
-                    Toast.makeText(getApplicationContext(),"Insercion fallida",Toast.LENGTH_LONG).show();
-                }
-            }
-
-        });
+        } catch (ParseException e) {
+            Toast.makeText(getApplicationContext(),"Insercion fallida",Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+        }
     }
 
     private void newParseVoteObject(int voto, List mac, String idZona) {
-        Log.d("LLego 2","entro a newparsevote");
         Voto votoObj = new Voto();
-        Log.d("LLego 2","creo nuevo objeto voto");
-        Log.d("idZona",idZona);
         votoObj.setIdZona(idZona);
-        Log.d("LLego 2","inserto zona a newparsevote");
         votoObj.setListMac(mac);
-        Log.d("LLego 2","inserto mac a newparsevote");
         votoObj.setVotos(voto);
-        Log.d("LLego 2","inserto voto a newparsevote");
 
         votoObj.saveInBackground(new SaveCallback() {
             @Override
@@ -211,5 +195,4 @@ public class MainActivity extends AppCompatActivity {
         return "02:00:00:00:00:00";
     }
 
-    public void salirApp (View view){ finishAffinity(); }
 }

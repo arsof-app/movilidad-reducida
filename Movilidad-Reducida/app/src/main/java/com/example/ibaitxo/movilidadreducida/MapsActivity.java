@@ -48,6 +48,14 @@ public class MapsActivity extends AppCompatActivity {
                 mapboxMap = map;
                 getServerList(mapboxMap,pos);
                 Button updateMarkers = (Button)findViewById(R.id.updateMarkers);
+                Button volver = (Button)findViewById(R.id.volver);
+                volver.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        finish();
+                    }
+                });
+
                 updateMarkers.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
