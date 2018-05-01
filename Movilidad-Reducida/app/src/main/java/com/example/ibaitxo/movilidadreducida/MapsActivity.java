@@ -123,7 +123,7 @@ public class MapsActivity extends AppCompatActivity {
             public void done(List<GeoPoint> objects, ParseException e) {
                 if (e == null) {
                     tpa.pointList = objects;
-                    mapboxMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 17));
+                    mapboxMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 16));
                     mapboxMap.addImage(
                             "my-marker-image",
                             BitmapFactory.decodeResource(MapsActivity.this.getResources(),
