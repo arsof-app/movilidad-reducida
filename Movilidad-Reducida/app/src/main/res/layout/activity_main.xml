@@ -48,7 +48,8 @@
         app:layout_constraintBottom_toTopOf="@+id/verMapa"
         app:layout_constraintStart_toEndOf="@+id/guideline"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo" />
+        app:srcCompat="@drawable/logo"
+        android:layout_marginLeft="72dp" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline"

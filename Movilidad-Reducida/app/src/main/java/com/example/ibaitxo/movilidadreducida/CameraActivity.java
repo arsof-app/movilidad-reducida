@@ -36,7 +36,6 @@ import com.example.ibaitxo.movilidadreducida.modelo.CameraPreview;
 public class CameraActivity extends AppCompatActivity{
     private static final int CAMERA_REQUEST = 1888;
     private static final int SHOW_INSERTACTIVITY = 3;
-    private ImageView imageView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -63,7 +62,6 @@ public class CameraActivity extends AppCompatActivity{
             startActivityForResult(insertIntent, SHOW_INSERTACTIVITY);
         }
         if (requestCode == CAMERA_REQUEST && resultCode == 0){
-            setResult(RESULT_CANCELED);//Puede que haya que quitarlo
             finish();
         }
         if (requestCode == SHOW_INSERTACTIVITY && resultCode == Activity.RESULT_OK){

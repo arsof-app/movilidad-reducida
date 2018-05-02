@@ -1,75 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/activity_vote"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/colorPrimary"
-    android:orientation="vertical">
-
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/imageView"
+        android:layout_width="256dp"
+        android:layout_height="254dp"
+        android:layout_marginBottom="29dp"
+        android:layout_marginEnd="18dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="28dp"
+        android:layout_weight="0.4"
         android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.4"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/textViewDescripcion"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginRight="18dp"
+        android:layout_marginLeft="16dp" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_height="0dp"
-        android:layout_weight="0.6">
+    <TextView
+        android:id="@+id/textViewNombre"
+        android:layout_width="200dp"
+        android:layout_height="44dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="48dp"
+        android:background="@drawable/borders"
+        android:text="Nombre"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.1">
+    <TextView
+        android:id="@+id/textViewDescripcion"
+        android:layout_width="284dp"
+        android:layout_height="130dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/borders"
+        android:text="Descripcion"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/textViewNombre" />
 
-            <TextView
-                android:id="@+id/textViewNombre"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="Nombre"
-                />
+    <Button
+        android:id="@+id/votar"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/volver"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/Votar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/volver"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDescripcion"
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="32dp" />
 
-        </RelativeLayout>
+    <Button
+        android:id="@+id/volver"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/votar"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/votar"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/Volver"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/votar"
+        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDescripcion"
+        android:layout_marginRight="32dp"
+        android:layout_marginLeft="16dp" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.25">
-
-            <TextView
-                android:id="@+id/textViewDescripcion"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="Descripcion" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.25">
-
-            <Button
-                android:id="@+id/votar"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:layout_above="@+id/volver"
-                android:layout_centerHorizontal="true"
-                android:text="@string/Votar" />
-
-            <Button
-                android:id="@+id/volver"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/votar"
-                android:layout_alignParentBottom="true"
-                android:layout_alignStart="@+id/votar"
-                android:layout_marginBottom="20dp"
-                android:text="@string/Volver"/>
-
-        </RelativeLayout>
-
-    </LinearLayout>
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>

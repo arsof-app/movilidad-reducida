@@ -12,6 +12,7 @@
         android:id="@+id/mapView"
         android:layout_width="340dp"
         android:layout_height="400dp"
+        android:background="@drawable/borders"
         android:layout_above="@+id/updateMarkers"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="31dp"

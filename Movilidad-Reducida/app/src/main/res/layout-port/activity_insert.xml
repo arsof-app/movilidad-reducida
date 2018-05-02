@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/colorPrimary"
@@ -19,63 +20,78 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textViewNombre"
+    <EditText
+        android:id="@+id/nombre"
         android:layout_width="200dp"
         android:layout_height="44dp"
-        android:background="@drawable/borders"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
         android:layout_marginEnd="32dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:text="Nombre"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/borders"
+        android:hint="Nombre..."
+        android:inputType="text"
+        android:textColor="#000000"
+        android:textCursorDrawable="@null"
+        app:layout_constraintBottom_toTopOf="@+id/text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        tools:ignore="MissingConstraints" />
 
-    <TextView
-        android:id="@+id/textViewDescripcion"
+    <EditText
+        android:id="@+id/text"
         android:layout_width="284dp"
         android:layout_height="130dp"
         android:background="@drawable/borders"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="80dp"
         android:layout_marginEnd="32dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="10dp"
-        android:text="Descripcion"
+        android:gravity="top"
+        android:hint="Descripcion..."
+        android:inputType="text|textMultiLine|textCapSentences"
+        android:textCursorDrawable="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewNombre" />
+        app:layout_constraintTop_toBottomOf="@+id/nombre" />
 
     <Button
-        android:id="@+id/votar"
+        android:id="@+id/button_subir"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/volver"
+        android:layout_above="@+id/button_cancelar"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="32dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
-        android:text="@string/Votar"
+        android:text="@string/Subir"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/volver"
-        app:layout_constraintTop_toBottomOf="@+id/textViewDescripcion" />
+        app:layout_constraintStart_toEndOf="@+id/button_cancelar"
+        app:layout_constraintTop_toBottomOf="@+id/text" />
 
     <Button
-        android:id="@+id/volver"
+        android:id="@+id/button_cancelar"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/votar"
+        android:layout_alignLeft="@+id/button_subir"
         android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/votar"
+        android:layout_alignStart="@+id/button_subir"
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="32dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
-        android:text="@string/Volver"
+        android:text="@string/Cancelar"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/votar"
+        app:layout_constraintEnd_toStartOf="@+id/button_subir"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewDescripcion" />
+        app:layout_constraintTop_toBottomOf="@+id/text" />
 
 </android.support.constraint.ConstraintLayout>

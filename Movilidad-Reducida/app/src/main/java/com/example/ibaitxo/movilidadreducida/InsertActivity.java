@@ -1,23 +1,14 @@
 package com.example.ibaitxo.movilidadreducida;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.location.Location;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
-
-import com.example.ibaitxo.movilidadreducida.modelo.GeoPoint;
-import com.parse.ParseException;
-import com.parse.SaveCallback;
 
 /**
  * Created by leralite on 3/15/18.
@@ -41,7 +32,7 @@ public class InsertActivity extends AppCompatActivity{
 
         byteArray = intent.getByteArrayExtra("image");
         image = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
-        imageView = findViewById(R.id.image_view);
+        imageView = findViewById(R.id.imageView);
         imageView.setImageBitmap(image);
 
         desc = findViewById(R.id.text);

@@ -19,7 +19,9 @@
         android:text="@string/ver_mapa"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageView3"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="63dp"
+        android:layout_marginRight="56dp" />
 
     <Button
         android:id="@+id/salir"
@@ -34,16 +36,22 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageView3"
-        app:layout_constraintTop_toBottomOf="@+id/anadirZona" />
+        app:layout_constraintTop_toBottomOf="@+id/anadirZona"
+        android:layout_marginRight="56dp"
+        android:layout_marginLeft="63dp" />
 
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="197dp"
         android:layout_height="250dp"
+        android:layout_marginBottom="33dp"
+        android:layout_marginStart="79dp"
         android:layout_marginTop="28dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/guideline"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/logo"
-        tools:layout_editor_absoluteX="100dp" />
+        android:layout_marginLeft="79dp" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline"
@@ -64,7 +72,9 @@
         android:text="@string/a_adir_zona"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageView3"
-        app:layout_constraintTop_toBottomOf="@+id/verMapa" />
+        app:layout_constraintTop_toBottomOf="@+id/verMapa"
+        android:layout_marginRight="56dp"
+        android:layout_marginLeft="63dp" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline3"
